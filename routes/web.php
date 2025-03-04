@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PKLController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DailyJournalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 | Rute untuk Admin
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Rute Humas
@@ -104,5 +106,26 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
         Route::delete('/{pkl}', [AdminController::class, 'destroyPKL'])->name('admin.pkls.destroy');
     });
 });
+/*
+|--------------------------------------------------------------------------
+| Rute untuk Siswa
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:Siswa'])->prefix('siswa')->group(function () {
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('siswa.attendance.index');
+    Route::get('/attendance/masukAttendance', [AttendanceController::class, 'masukAttendance'])->name('siswa.attendance.masuk');
+    Route::get('/attendance/pulangAttendance', [AttendanceController::class, 'pulangAttendance'])->name('siswa.attendance.pulang');
+    Route::post('/attendance/masuk', [AttendanceController::class, 'store'])->name('siswa.attendance.store');
+    Route::post('/attendance/pulang', [AttendanceController::class, 'storePulang'])->name('siswa.attendance.storepulang');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('siswa.attendance.show');
+    Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy']);
+
+    Route::get('/journal', [DailyJournalController::class, 'index'])->name('siswa.journal.index');
+    Route::get('/journal/create', [DailyJournalController::class, 'create'])->name('siswa.journal.create');
+    Route::post('/journal/store', [DailyJournalController::class, 'store'])->name('siswa.journal.store');
+    Route::get('/journal/check', [DailyJournalController::class, 'checkJournal'])->name('siswa.journal.check');
+
+});
+
 // Memuat rute autentikasi Laravel
 require __DIR__ . '/auth.php';

@@ -10,8 +10,7 @@ class CreateDailyJournalsTable extends Migration
     {
         Schema::create('daily_journals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pkl_id')->constrained('praktik_kerja_lapangan')->onDelete('cascade');
-            $table->foreignId('siswa_id')->constrained('students')->onDelete('cascade');
+            $table->foreignId('pkl_id')->constrained('praktik_kerja_lapangans')->onDelete('cascade');
             $table->date('tanggal');
             $table->text('isi');
             $table->string('foto')->nullable();

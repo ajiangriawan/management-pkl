@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -21,13 +21,13 @@
         <!-- Logo -->
         <div class="flex justify-center mb-4">
             <a href="/">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-24">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-20">
             </a>
         </div>
 
         <!-- Form -->
         <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-700">SMK PGRI 2 PALEMBANG</h2>
+            <h3 class="text-2xl font-bold text-gray-700">SMK PGRI 2 PALEMBANG</h3>
         </div>
 
         {{ $slot }}

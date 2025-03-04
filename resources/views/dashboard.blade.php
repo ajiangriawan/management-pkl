@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<!-- Tabel Data -->
+<!-- Tabel Data 
 <div class="bg-white p-6 mt-6 rounded-lg shadow-md">
     <h2 class="text-lg font-semibold mb-4">Data Guru</h2>
     <table class="w-full border-collapse">
@@ -62,7 +62,7 @@
         </tbody>
     </table>
 </div>
-
+-->
 <script>
     lucide.createIcons();
 </script>

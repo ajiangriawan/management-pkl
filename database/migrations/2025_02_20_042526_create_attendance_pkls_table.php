@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendance', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) { // Nama tabel disesuaikan ke "attendances"
             $table->id();
-            $table->foreignId('pkl_id')->constrained('praktik_kerja_lapangan')->onDelete('cascade');
+            $table->foreignId('pkl_id')->constrained('praktik_kerja_lapangans')->onDelete('cascade');
             $table->foreignId('siswa_id')->constrained('students')->onDelete('cascade');
             $table->date('tanggal');
-            $table->time('waktu');
-            $table->string('lokasi');
-            $table->string('selfie');
+            $table->time('waktu')->nullable(); // Waktu masuk
+            $table->decimal('latitude', 10, 7); // Menyimpan lokasi dengan koordinat
+            $table->decimal('longitude', 10, 7);
+            $table->string('selfie'); // Path foto selfie
             $table->enum('jenis_absensi', ['Masuk', 'Pulang']);
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attendance_pkls');
+        Schema::dropIfExists('attendances'); // Nama tabel sudah sesuai
     }
 };

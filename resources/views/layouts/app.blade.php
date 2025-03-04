@@ -8,6 +8,7 @@
     <title>@yield('title', 'SMK PGRI 2 PALEMBANG')</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
 
@@ -44,6 +45,17 @@
                         <li><a href="{{ route('admin.pkls') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700 rounded"><i data-lucide="briefcase"></i> PKL</a></li>
                     </ul>
                 </li>
+                @elseif(Auth::user()->role === 'Siswa')
+                <li class="py-2">
+                    <a href="{{ route('siswa.attendance.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded">
+                        <i data-lucide="calendar-clock"></i> Absensi
+                    </a>
+                </li>
+                <li class="py-2">
+                    <a href="{{ route('siswa.journal.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded">
+                        <i data-lucide="book-marked"></i> Journal
+                    </a>
+                </li>
                 @endif
 
                 <li class="py-2">
@@ -65,7 +77,7 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col w-full">
         <!-- Header -->
         <header class="bg-white shadow-md p-4 flex justify-between items-center">
             <button id="menu-toggle" class="md:hidden">
@@ -112,12 +124,12 @@
     </div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobile-sidebar" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div id="mobile-sidebar" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden w-full">
         <aside class="w-64 bg-gray-900 text-white p-5 absolute left-0 top-0 h-full">
             <button id="close-sidebar" class="absolute top-4 right-4 text-white">
                 <i data-lucide="x"></i>
             </button>
-            <nav>
+            <nav class="mt-4">
                 <ul>
                     <li class="py-2">
                         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2 bg-gray-800 rounded">
@@ -141,7 +153,32 @@
                             <li><a href="{{ route('admin.pkls') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700 rounded"><i data-lucide="briefcase"></i> PKL</a></li>
                         </ul>
                     </li>
+                    @elseif(Auth::user()->role === 'Siswa')
+                    <li class="py-2">
+                        <a href="{{ route('siswa.attendance.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded">
+                            <i data-lucide="calendar-clock"></i> Absensi
+                        </a>
+                    </li>
+                    <li class="py-2">
+                        <a href="{{ route('siswa.journal.index') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded">
+                            <i data-lucide="book-marked"></i> Journal
+                        </a>
+                    </li>
                     @endif
+                    <li class="py-2">
+                        <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-800 rounded">
+                            <i data-lucide="user"></i> Profil
+                        </a>
+                    </li>
+
+                    <li class="py-2">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-3 px-4 py-2 w-full text-left hover:bg-red-600 rounded">
+                                <i data-lucide="log-out"></i> Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -150,10 +187,12 @@
     <script>
         lucide.createIcons();
 
+        // Toggle for desktop dropdown
         document.getElementById("data-master-toggle")?.addEventListener("click", function() {
             document.getElementById("data-master-menu").classList.toggle("hidden");
         });
 
+        // Toggle for mobile sidebar
         document.getElementById("menu-toggle")?.addEventListener("click", function() {
             document.getElementById("mobile-sidebar").classList.remove("hidden");
         });
@@ -162,6 +201,7 @@
             document.getElementById("mobile-sidebar").classList.add("hidden");
         });
 
+        // Toggle for mobile dropdown
         document.getElementById("mobile-data-master-toggle")?.addEventListener("click", function() {
             document.getElementById("mobile-data-master-menu").classList.toggle("hidden");
         });
